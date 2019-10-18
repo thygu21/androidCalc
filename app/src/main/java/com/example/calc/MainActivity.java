@@ -16,13 +16,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decHex(View v) {
+        TextView answer = (TextView) findViewById(R.id.textAnswer);
+
         switch (v.getId()) {
             case R.id.dec:
-                int b;
+                answer.setText(String.valueOf(Long.parseLong(answer.getText().toString(), 16)));
                 break;
 
             case R.id.hex:
-                int a;
+                answer.setText(Long.toHexString(Long.parseLong(answer.getText().toString())));
                 break;
 
         }
@@ -45,6 +47,66 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enter(View v) {
+        TextView answerbox = (TextView)findViewById(R.id.textAnswer);
+        String answer = answerbox.getText().toString();
+
+        while(!answer.equals(""))
+        {
+            int end = answer.indexOf(")");
+            if(end == -1)
+                break;
+            int start = answer.lastIndexOf("(", end);
+            String subresult = calc(answer.substring(start + 1, end - 1).toString());
+            answer = answer.substring(0, start - 1) + subresult + answer.substring(end + 1, answer.length());
+        }
+        answer = calc(answer);
+
+        answerbox.setText(answer);
+    }
+
+    public String calc(String s)
+    {
+        int mul = s.indexOf("*");
+        int div = s.indexOf("/");
+        int minus = s.indexOf("-");
+        int plus = s.indexOf("+");
+        int sign;
+
+        while(mul != -1 || div != -1) // 곱셈이나 나눗셈이 없어질 때까지 반복
+        {
+            if(mul == -1)
+                sign = div;
+            else if(div == -1)
+                sign = mul;
+            else if(mul < div)
+                sign = mul;
+            else
+                sign = div;
+
+            int frontstart, backend;
+            frontstart = answer.
+            if(sign == mul)
+                int subresult = Integer.parseInt((s.substring(sign-1,sign-1))*Integer.parseInt((s.substring(sign+1,sign+1));
+            else
+                int subresult = Integer.parseInt((s.substring(sign-1,sign-1))/Integer.parseInt((s.substring(sign+1,sign+1));
+
+        }
+
+        while(plus != -1 || minus != -1) // 덧셈이나 뺄셈이 없어질 때까지 반복
+        {
+            if(plus == -1)
+                sign = minus;
+            else if(minus == -1)
+                sign = plus;
+            else if(plus < minus)
+                sign = plus;
+            else
+                sign = minus;
+
+
+        }
+
+
 
     }
 
@@ -58,6 +120,5 @@ public class MainActivity extends AppCompatActivity {
             textbox.setText("");
         else
             textbox.setText(text.substring(0, text.length() - 1));
-
     }
 }
